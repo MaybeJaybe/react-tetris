@@ -7,9 +7,9 @@ export const gridDefault = () => {
     const cols = 10
     const array = []
 
-    for (let row = 0; row < rows; row ++) {
+    for (let row = 0; row < rows; row++) {
         array.push([])
-        for (let col = 0; col < cols; col ++) {
+        for (let col = 0; col < cols; col++) {
             array[row].push(0)
         }
     }
@@ -124,23 +124,77 @@ export const shapes = [
       [0,1,1,0],
       [0,1,1,0],
       [0,0,0,0]]]
-  ]
+]
 
-  export const randomShape = () => {
-      return random(1, shapes.length - 1)
-  }
+export const randomShape = () => {
+    return random(1, shapes.length - 1)
+}
 
-  export const defaultState = () => {
-      return {
-          grid: gridDefault(),
-          shape: randomShape(),
-          rotation: 0,
-          x: 5,
-          y: -4,
-          nextShape: randomShape(),
-          isRunning: true,
-          score: 0,
-          speed: 1000,
-          gameOver: false,
-      }
-  }
+export const defaultState = () => {
+    return {
+        grid: gridDefault(),
+        shape: randomShape(),
+        rotation: 0,
+        x: 5,
+        y: -4,
+        nextShape: randomShape(),
+        isRunning: true,
+        score: 0,
+        speed: 1000,
+        gameOver: false,
+    }
+}
+
+export const nextRotation = (shape, rotation) => {
+    return (rotation + 1) % shapes[shape].length
+}
+
+export const canMoveTo = (shape, grid, x, y, rotation) => {
+    const currentShape = shapes[shape][rotation]
+    for (let row = 0; row < currentShape.length; row++) {
+        for (let col = 0; col < currentShape[row].length; col++) {
+            if (currentShape[row][col] !== 0) {
+                const proposedX = col + x
+                const proposedY = row + y
+                if (proposedY < 0) {
+                    continue
+                }
+                const possibleRow = grid[proposedY]
+                if (possibleRow) {
+                    if (possibleRow[proposedX] === undefined || possibleRow[proposedX] !== 0) {
+                        return false
+                    }
+                } else {
+                    return false
+                }
+            }
+        }
+    }
+    return true
+}
+
+export const addBlockToGrid = (shape, grid, x, y, rotation) => {
+    const block = shapes[shape][rotation];
+    const newGrid = [...grid];
+    for (let row = 0; row < block.length; row++) {
+        for (let col = 0; col < block[row].length; col++) {
+            if (block[row][col]) {
+                newGrid[row + y][col + x] = shape;
+            }
+        }
+    }
+    return newGrid;
+}
+
+export const checkRows = (grid) => {
+    const points = [0, 40, 100, 300, 1200]
+    let completedRows = 0
+    for (let row = 0; row < grid.length; row++) {
+        if (grid[row].indexOf(0) === -1) {
+            completedRows += 1
+            grid.splice(row, 1)
+            grid.unshift(Array(10).fill(0))
+        }
+    }
+    return points[completedRows]
+}
