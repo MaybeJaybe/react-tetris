@@ -9,8 +9,11 @@ export default function ScoreBoard(props) {
 
     return (
         <div className="score-board">
-            <div>Score:{ score }</div>
-            <div>Level: 1</div>
+            <div>Score:</div>
+            <div>{ score }</div>
+            <div>Level:</div>
+            <div>1</div>
+            {/* if implementing key listener events, spacebar is 32, escape is 27 */}
             <button className="score-board-button" onClick={(e) => {
                 if (gameOver) { return }
                 if (isRunning) {
