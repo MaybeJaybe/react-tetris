@@ -64,7 +64,7 @@ export default function Controls(props) {
         return () => {
             document.removeEventListener('keydown', () => {console.log("removed")});
         }
-    }, [handleKeyboardActions])
+    }, [])
 
     return (
         <div className="controls">
