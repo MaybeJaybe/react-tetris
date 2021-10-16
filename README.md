@@ -6,7 +6,11 @@ This app is putting a fresh twist on the classic tetris game.
 
 Initial app was made following this [tutorial](https://github.com/MakeSchool-Tutorials/web-7-react-redux-tetris-app) with approval from the creator.
 
-![](public/gameplay.png) ![](public/paused.png) ![](public/game-over.png)
+![](public/gameplay.png)
+
+![](public/paused.png)
+
+![](public/game-over.png)
 
 Any contributions or suggestions are appreciated.
 
